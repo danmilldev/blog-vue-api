@@ -6,7 +6,8 @@
       <input type="text" name="title">
       <label for="description">Description:</label>
       <textarea name="description" id="description" cols="30" rows="10" placeholder="description..."></textarea>
-      <button @click="showModal = false"> Submit Data</button>
+      <button @click="showModal = false">Submit Data</button>
+      <button @click="showModal = false">Cancel</button>
     </div>
   </div>
   <nav class="navbar">
@@ -14,13 +15,25 @@
     <button @click="showModal = true">Add new Post</button>
   </nav>
 
+  <div>
+    <h1>posts</h1>
+    <button @click="showPosts">Show Posts</button>
+    <p>{{ posts }}</p>
+  </div>
+
 </template>
 
 <script setup>
-
 import { ref } from "vue";
+import axios from "axios"
 
 const showModal = ref(false)
+const posts = ref("")
+let response
+function showPosts() {
+  response = axios.get({url: "http://localhost:5000/blog", headers: {"content-type": "application/json"}, data: {}})
+  posts.value = response.data
+}
 
 </script>
 
